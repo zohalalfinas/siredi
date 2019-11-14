@@ -57,7 +57,7 @@ class PeriksaController extends Controller
      * @param  \App\Periksa  $periksa
      * @return \Illuminate\Http\Response
      */
-    public function show(Periksa $periksa)
+    public function show($id)
     {
         //
     }
@@ -68,7 +68,7 @@ class PeriksaController extends Controller
      * @param  \App\Periksa  $periksa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Periksa $periksa)
+    public function edit($id)
     {
         //
     }
@@ -80,9 +80,16 @@ class PeriksaController extends Controller
      * @param  \App\Periksa  $periksa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Periksa $periksa)
+    public function update(Request $request, $id)
     {
-        return $periksa;
+        $periksa = Periksa::find($id);
+        $periksa->tgl_pemeriksaan  = $request->periksa ;
+        $periksa->jam_pemeriksaan = $request->jam;
+        $periksa->diagnosa = $request->diagnosa;
+        $periksa->keterangan = $request->keterangan;
+        $periksa->update();
+
+        return redirect('dokter/pemeriksaan');
     }
 
     /**
@@ -91,8 +98,11 @@ class PeriksaController extends Controller
      * @param  \App\Periksa  $periksa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Periksa $periksa)
+    public function destroy($id)
     {
-        //
+          $periksa = Periksa::find($id);
+          $periksa->delete();
+
+        return redirect('dokter/pemeriksaan');
     }
 }

@@ -18,6 +18,7 @@ Route::get('/dokter', function () {
 	return view('dokter/main');
 });
 Route::resource('/dokter/pemeriksaan', 'PeriksaController');
-Route::resource('/dokter/pemeriksaan/{pemeriksaan}', 'PeriksaController@update');
-
+// Route::resource('/dokter/pemeriksaan/{pemeriksaan}', 'PeriksaController@update');
+Route::post('/dokter/pemeriksaan/ubahData/{id}', 'PeriksaController@update');
+Route::post('/dokter/pemeriksaan/hapusData/{id}', 'PeriksaController@destroy');
 Route::post('/tambahData', 'PeriksaController@store');
