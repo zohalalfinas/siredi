@@ -15,13 +15,26 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::resource('/periksa', 'PeriksaController');
-Route::resource('/pengguna', 'PenggunaController');
-Route::resource('/resep', 'ResepController');
-Route::resource('/pasien', 'PasienController');
+Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
+{   
+
+    Route::group(['peran'=> 'Super Admin'],function(){
+        Route::resource('/pengguna', 'PenggunaController');
+    });
+    Route::group(['peran'=> 'Dokter'],function(){
+        Route::resource('/periksaa', 'PeriksaController');
+        Route::resource('/resep', 'ResepController');
+        Route::get('/pasien', 'PasienController@index')->name('pasien.index');
+
+    });
+    Route::group(['peran'=> 'Administrator'],function(){
+        Route::resource('/pasien', 'PasienController');
+    });
+
+});
 
 Auth::routes([
-    'register' => false, // Registration Routes...
+    'register' => false,// Registration Routes...
 ]);
 
 Route::get('/home', 'HomeController@index')->name('home.index');
