@@ -15,7 +15,13 @@ class CreatePegawaiTable extends Migration
     {
         Schema::create('pegawai', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('klinik_id');
+            $table->string('nama');
+            $table->text('alamat');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('klinik_id')->references('id')->on('klinik')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

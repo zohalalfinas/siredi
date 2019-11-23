@@ -19,10 +19,14 @@ class CreatePemeriksaanTable extends Migration
             $table->string('jam_pemeriksaan');
             $table->string('keterangan');
             $table->string('diagnosa');
-            $table->unsignedBigInteger('id_dokter')->nullable();
-            $table->unsignedBigInteger('id_resep')->nullable();
-            $table->unsignedBigInteger('id_pasien')->nullable();
+            $table->unsignedBigInteger('dokter_id')->nullable();
+            $table->unsignedBigInteger('resep_id')->nullable();
+            $table->unsignedBigInteger('pasien_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('dokter_id')->references('id')->on('dokter')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('resep_id')->references('id')->on('resep')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('pasien_id')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

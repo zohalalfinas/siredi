@@ -1,7 +1,7 @@
-@extends('dokter/layout')
+@extends('layouts.master')
 
-@section('tittle')
-dokter
+@section('title')
+Pasien
 @endsection
 
 @section('content')
@@ -9,14 +9,14 @@ dokter
     <div class="content mt-3">
 
         <table class="table">
-          <thead class="thead-light">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-        </thead>
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+                </tr>
+            </thead>
         <tbody>
             <tr>
                 <th scope="row">1</th>

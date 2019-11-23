@@ -14,11 +14,14 @@
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/dokter', function () {
-	return view('dokter/main');
-});
-Route::resource('/dokter/pemeriksaan', 'PeriksaController');
-// Route::resource('/dokter/pemeriksaan/{pemeriksaan}', 'PeriksaController@update');
-Route::post('/dokter/pemeriksaan/ubahData/{id}', 'PeriksaController@update');
-Route::post('/dokter/pemeriksaan/hapusData/{id}', 'PeriksaController@destroy');
-Route::post('/tambahData', 'PeriksaController@store');
+
+Route::resource('/periksa', 'PeriksaController');
+Route::resource('/pengguna', 'PenggunaController');
+Route::resource('/resep', 'ResepController');
+Route::resource('/pasien', 'PasienController');
+
+Auth::routes([
+    'register' => false, // Registration Routes...
+]);
+
+Route::get('/home', 'HomeController@index')->name('home.index');

@@ -15,8 +15,8 @@ class PeriksaController extends Controller
      */
     public function index()
     {
-        $pemeriksaan = DB::table('pemeriksaan')->get();
-        return view('dokter/pemeriksaan', ['pemeriksaan' => $pemeriksaan]);
+        $pemeriksaan = Periksa::all();
+        return view('pemeriksaan.index', compact('pemeriksaan'));
     }
 
     /**
@@ -45,7 +45,7 @@ class PeriksaController extends Controller
         $periksa->keterangan = $request->keterangan;
         $periksa->save();
 
-        return redirect('dokter/pemeriksaan');
+        return redirect('/pemeriksaan');
         $request->validate([
                             
         ]);
@@ -89,7 +89,7 @@ class PeriksaController extends Controller
         $periksa->keterangan = $request->keterangan;
         $periksa->update();
 
-        return redirect('dokter/pemeriksaan');
+        return redirect('/pemeriksaan');
     }
 
     /**
@@ -100,9 +100,9 @@ class PeriksaController extends Controller
      */
     public function destroy($id)
     {
-          $periksa = Periksa::find($id);
-          $periksa->delete();
+        $periksa = Periksa::find($id);
+        $periksa->delete();
 
-        return redirect('dokter/pemeriksaan');
+        return redirect('/pemeriksaan');
     }
 }
