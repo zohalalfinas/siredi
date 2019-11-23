@@ -22,10 +22,9 @@ Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
         Route::resource('/pengguna', 'PenggunaController');
     });
     Route::group(['peran'=> 'Dokter'],function(){
-        Route::resource('/periksaa', 'PeriksaController');
+        Route::resource('/periksa', 'PeriksaController');
         Route::resource('/resep', 'ResepController');
         Route::get('/pasien', 'PasienController@index')->name('pasien.index');
-
     });
     Route::group(['peran'=> 'Administrator'],function(){
         Route::resource('/pasien', 'PasienController');

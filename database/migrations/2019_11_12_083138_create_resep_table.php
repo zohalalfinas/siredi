@@ -15,12 +15,9 @@ class CreateResepTable extends Migration
     {
         Schema::create('resep', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('obat_id');
             $table->string('dosis');
             $table->text('deskripsi');
             $table->timestamps();
-
-            $table->foreign('obat_id')->references('id')->on('obat')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

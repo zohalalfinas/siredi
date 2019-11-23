@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nama', 'email', 'password','peran_id','foto','nip','alamat','nomor_telepon'
     ];
 
     /**
@@ -36,4 +36,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function peran()
+    {
+        return $this->belongsTo('App\Peran','peran_id');
+    }
+
+    public function punyaPeran($peran)
+    {
+        $this->have_peran = $this->getPeranUser();
+
+        if (is_array($peran)) {
+            foreach ($peran as $need_peran) {
+                if ($this->cekPeranUser($need_peran)) {
+                    return true;
+                }
+            }
+        } else {
+            return $this->cekPeranUser($peran);
+        }
+        return false;
+    }
+
+    private function getPeranUser()
+    {
+        return $this->peran()->getResults();
+    }
+
+    private function cekPeranUser($peran)
+    {
+        return (strtolower($peran) == strtolower($this->have_peran->peran)) ? true : false;
+    }
 }

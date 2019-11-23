@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class PenggunaSeeder extends Seeder
 {
@@ -13,21 +14,21 @@ class PenggunaSeeder extends Seeder
     {
         DB::table('users')->insert([
             'peran_id'  => 1,
-            'name'      => 'Ini Super Admin',
+            'nama'      => 'Ini Super Admin',
             'email'     => 'superadmin@gmail.com',
-            'password'  => 'superadmin123',
+            'password'  => Hash::make('superadmin123'),
         ]);
         DB::table('users')->insert([
             'peran_id'  => 2,
-            'name'      => 'Ini Administrator',
+            'nama'      => 'Ini Administrator',
             'email'     => 'administrator@gmail.com',
-            'password'  => 'administrator123',
+            'password'  => Hash::make('administrator123'),
         ]);
         DB::table('users')->insert([
             'peran_id'  => 3,
-            'name'      => 'Ini Dokter',
+            'nama'      => 'Ini Dokter',
             'email'     => 'dokter@gmail.com',
-            'password'  => 'dokter123',
+            'password'  => Hash::make('dokter123'),
         ]);
     }
 }

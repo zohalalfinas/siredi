@@ -11,4 +11,9 @@ class Peran extends Model
 	protected $fillable = [
 		'peran', 
 	];
+
+	public function users()
+	{
+		return $this->hasMany('App\User');
+	}
 }
