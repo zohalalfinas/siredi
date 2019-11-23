@@ -15,16 +15,12 @@ class CreatePemeriksaanTable extends Migration
     {
         Schema::create('pemeriksaan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('tgl_pemeriksaan');
-            $table->string('jam_pemeriksaan');
-            $table->string('keterangan');
-            $table->string('diagnosa');
-            $table->unsignedBigInteger('dokter_id')->nullable();
+            $table->text('keterangan');
+            $table->text('diagnosa');
             $table->unsignedBigInteger('resep_id')->nullable();
             $table->unsignedBigInteger('pasien_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('dokter_id')->references('id')->on('dokter')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('resep_id')->references('id')->on('resep')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('pasien_id')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
         });
