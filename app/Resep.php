@@ -13,4 +13,8 @@ class Resep extends Model
 		'dosis',
 		'deskripsi',
 	];
+	public function periksa()
+	{
+		return $this->hasMany('App\Periksa', 'periksa_id');
+	}
 }

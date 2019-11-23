@@ -34,7 +34,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="./"><img src="" alt="">Dokter</a>
+                <a class="navbar-brand" href="./"><img src="" alt="">{{ config('app.name') }}</a>
                 <a class="navbar-brand hidden" href="./"><img src="{{asset('template/images/logo2.png')}}" alt="Logo"></a>
             </div>
 
@@ -45,9 +45,7 @@
                     </li>
                     <h3 class="menu-title">Menu</h3><!-- /.menu-title -->
                     @if (auth()->user()->peran->peran == "Dokter")
-                        <li class="">
-                            <a href="{{ route('periksa.index')}}" > <i class="menu-icon fa fa-plus-square"></i>Pemeriksaan</a>
-                        </li>
+                        
                         <li class="">
                             <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Pasien</a>
                         </li>

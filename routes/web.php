@@ -22,11 +22,12 @@ Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
         Route::resource('/pengguna', 'PenggunaController');
     });
     Route::group(['peran'=> 'Dokter'],function(){
-        Route::resource('/periksa', 'PeriksaController');
+        Route::get('/periksa/create/{pasien}', 'PeriksaController@create')->name('periksa.create');
+        Route::resource('/periksa', 'PeriksaController')->except(['create']);
         Route::resource('/resep', 'ResepController');
     });
     Route::group(['peran'=> 'Administrator'],function(){
-        Route::resource('/pasien', 'PasienController')->except(['pasien.index']);
+        Route::resource('/pasien', 'PasienController');
     });
     Route::group(['peran'=> ['Administrator','Dokter']],function(){
         Route::get('/pasien', 'PasienController@index')->name('pasien.index');

@@ -9,12 +9,18 @@ class Periksa extends Model
 	protected $table = 'pemeriksaan';
 	
 	protected $fillable = [
-		'tgl_pemeriksaan', 
-		'jam_pemeriksaan',
 		'diagnosa',
 		'keterangan',
-		'id_dokter',
-		'id_resep',
-		'id_pasien'
+		'resep_id',
+		'pasien_id'
 	];
+
+	public function resep()
+	{
+		return $this->belongsTo('App\Resep', 'resep_id');
+	}
+	public function pasien()
+	{
+		return $this->belongsTo('App\Pasien', 'pasien_id');
+	}
 }

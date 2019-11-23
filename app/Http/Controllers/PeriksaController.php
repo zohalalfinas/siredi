@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Pasien;
 use Illuminate\Support\Facades\DB;
 use App\Periksa;
 use Illuminate\Http\Request;
@@ -24,9 +25,9 @@ class PeriksaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Pasien $pasien)
     {
-        //
+        return view('pemeriksaan.create', compact('pasien'));
     }
 
     /**
@@ -34,7 +35,7 @@ class PeriksaController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+    //  */
     public function store(Request $request)
     {
        // print 'halo';
