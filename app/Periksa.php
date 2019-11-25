@@ -11,14 +11,10 @@ class Periksa extends Model
 	protected $fillable = [
 		'diagnosa',
 		'keterangan',
-		'resep_id',
+		'resep',
 		'pasien_id'
 	];
 
-	public function resep()
-	{
-		return $this->belongsTo('App\Resep', 'resep_id');
-	}
 	public function pasien()
 	{
 		return $this->belongsTo('App\Pasien', 'pasien_id');

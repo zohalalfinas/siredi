@@ -1,7 +1,13 @@
 @extends('layouts.master')
 
+
 @section('title')
-    Tambah data pasien - {{ config('app.name') }}
+    {{ $title }} {{ $subtitle }} - {{ config('app.name') }}
+@endsection
+
+@section('breadcrumb')
+    <li><a href="{{ route('pasien.index') }}">{{ $title }}</a></li>
+    <li class="active">{{ $subtitle }}</li>
 @endsection
 
 @section('content')

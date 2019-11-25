@@ -3,76 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Pasien;
-use Illuminate\Support\Facades\DB;
 use App\Periksa;
+use Alert;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class PeriksaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $pemeriksaan = Periksa::all();
-        return view('pemeriksaan.index', compact('pemeriksaan'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Pasien $pasien)
-    {
-        return view('pemeriksaan.create', compact('pasien'));
-    }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
     //  */
-    public function store(Request $request)
+    public function store(Request $request, Pasien $pasien)
     {
-       // print 'halo';
-        $periksa = new Periksa;
-        $periksa->tgl_pemeriksaan  = $request->periksa ;
-        $periksa->jam_pemeriksaan = $request->jam;
-        $periksa->diagnosa = $request->diagnosa;
-        $periksa->keterangan = $request->keterangan;
-        $periksa->save();
-
-        return redirect('/pemeriksaan');
         $request->validate([
-                            
+            'keterangan'    => ['required','string'],
+            'diagnosa'      => ['required','string'],
+            'resep'         => ['required','string'],
         ]);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Periksa  $periksa
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        Periksa::create([
+            'keterangan'    => $request->keterangan,
+            'diagnosa'      => $request->diagnosa,
+            'resep'         => $request->resep,
+            'pasien_id'     => $pasien->id,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Periksa  $periksa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        Alert::success('Data periksa berhasil ditambahkan','Berhasil');
+        return back();
     }
 
     /**
@@ -82,16 +41,21 @@ class PeriksaController extends Controller
      * @param  \App\Periksa  $periksa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Periksa $periksa)
     {
-        $periksa = Periksa::find($id);
-        $periksa->tgl_pemeriksaan  = $request->periksa ;
-        $periksa->jam_pemeriksaan = $request->jam;
-        $periksa->diagnosa = $request->diagnosa;
-        $periksa->keterangan = $request->keterangan;
-        $periksa->update();
- 
-        return redirect('/pemeriksaan');
+        $request->validate([
+            'keterangan'    => ['required','string'],
+            'diagnosa'      => ['required','string'],
+            'resep'         => ['required','string'],
+        ]);
+
+        $periksa->diagnosa      = $request->diagnosa;
+        $periksa->keterangan    = $request->keterangan;
+        $periksa->resep         = $request->keterangan;
+        $periksa->save();
+
+        Alert::success('Data periksa berhasil diperbarui','Berhasil');
+        return back();
     }
 
     /**
@@ -100,11 +64,21 @@ class PeriksaController extends Controller
      * @param  \App\Periksa  $periksa
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Periksa $periksa)
     {
-        $periksa = Periksa::find($id);
-        $periksa->delete();
+        Periksa::destroy($periksa->id);
 
-        return redirect('/pemeriksaan');
+        Alert::success('Data periksa berhasil dihapus','Berhasil');
+        return back();
+    }
+
+    /**
+     * Display the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDataPeriksa(Request $request)
+    {
+        echo json_encode(Periksa::find($request->id));
     }
 }

@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="{{asset('template/vendors/themify-icons/css/themify-icons.css')}}">
     <link rel="stylesheet" href="{{asset('template/vendors/flag-icon-css/css/flag-icon.min.css')}}">
     <link rel="stylesheet" href="{{asset('template/vendors/selectFX/css/cs-skin-elastic.css')}}">
-    <link rel="stylesheet" href="{{asset('template/vendors/jqvmap/dist/jqvmap.min.css')}}">
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
     @yield('styles')
@@ -42,24 +41,44 @@
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    @if ($title == 'Dashboard')
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
                         <a href="{{ url('') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <h3 class="menu-title">Menu</h3><!-- /.menu-title -->
                     @if (auth()->user()->peran->peran == "Dokter")
                         
-                        <li class="">
+                        @if ($title == 'Pasien')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
                             <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Pasien</a>
                         </li>
                     @elseif (auth()->user()->peran->peran == "Administrator")
-                        <li class="">
+                        @if ($title == 'active')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
                             <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Pasien</a>
                         </li>
-                        <li class="">
+                        @if ($title == 'Dokter')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
                             <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Dokter</a>
                         </li>
                     @elseif (auth()->user()->peran->peran == "Super Admin")
-                        <li class="">
+                        @if ($title == 'Pengguna')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
                             <a href="{{ route('pengguna.index')}}" > <i class="menu-icon fa fa-users"></i>Pengguna</a>
                         </li>
                     @endif
@@ -115,7 +134,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>@yield('title')</h1>
+                        <h1>{{ $title }}</h1>
                     </div>
                 </div>
             </div>
@@ -123,7 +142,7 @@
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                            <li class="active">@yield('title')</li>
+                            @yield('breadcrumb')
                         </ol>
                     </div>
                 </div>
@@ -139,36 +158,11 @@
 <script src="{{asset('template/vendors/popper.js/dist/umd/popper.min.js')}}"></script>
 <script src="{{asset('template/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('template/assets/js/main.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 @include('sweet::alert')
-
-
-<script src="{{asset('template/vendors/chart.js/dist/Chart.bundle.min.js')}}"></script>
-<script src="{{asset('template/assets/js/dashboard.js')}}"></script>
-<script src="{{asset('template/assets/js/widgets.js')}}"></script>
-<script src="{{asset('template/vendors/jqvmap/dist/jquery.vmap.min.js')}}"></script>
-<script src="{{asset('template/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
-<script src="{{asset('template/vendors/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
-<script>
-    (function($) {
-        "use strict";
-
-        jQuery('#vmap').vectorMap({
-            map: 'world_en',
-            backgroundColor: null,
-            color: '#ffffff',
-            hoverOpacity: 0.7,
-            selectedColor: '#1de9b6',
-            enableZoom: true,
-            showTooltip: true,
-            values: sample_data,
-            scaleColors: ['#1de9b6', '#03a9f5'],
-            normalizeFunction: 'polynomial'
-        });
-    })(jQuery);
-</script>
 
 @stack('scripts')
 </body>

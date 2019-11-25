@@ -23,9 +23,11 @@ Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
         Route::resource('/pengguna', 'PenggunaController');
     });
     Route::group(['peran'=> 'Dokter'],function(){
+        Route::post('/periksa/ajax/get-data-periksa', 'PeriksaController@getDataPeriksa')->name('ajax.get.data.periksa');
         Route::get('/periksa/create/{pasien}', 'PeriksaController@create')->name('periksa.create');
-        Route::resource('/periksa', 'PeriksaController')->except(['create']);
-        Route::resource('/resep', 'ResepController');
+        Route::post('/periksa/{pasien}', 'PeriksaController@store')->name('periksa.store');
+        Route::patch('/periksa/{periksa}', 'PeriksaController@update')->name('periksa.update');
+        Route::delete('/periksa/{periksa}', 'PeriksaController@destroy')->name('periksa.destroy');
     });
     Route::group(['peran'=> 'Administrator'],function(){
         Route::resource('/pasien', 'PasienController');

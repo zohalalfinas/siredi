@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pasien;
 use Alert;
+use App\Periksa;
 use Illuminate\Http\Request;
 
 class PasienController extends Controller
@@ -15,8 +16,9 @@ class PasienController extends Controller
      */
     public function index()
     {
+        $title = 'Pasien';
         $pasien = Pasien::paginate(10);
-        return view('pasien.index', compact('pasien'));
+        return view('pasien.index', compact('pasien','title'));
     }
 
     /**
@@ -26,7 +28,9 @@ class PasienController extends Controller
      */
     public function create()
     {
-        return view('pasien.create');
+        $title = 'Pasien';
+        $subtitle = 'Tambah Data';
+        return view('pasien.create',compact('title','subtitle'));
     }
 
     /**
@@ -56,7 +60,10 @@ class PasienController extends Controller
      */
     public function show(Pasien $pasien)
     {
-        return view('pasien.show', compact('pasien'));
+        $title = 'Pasien';
+        $subtitle = 'Detail Data';
+        $periksa = Periksa::wherePasienId($pasien->id)->paginate(10);
+        return view('pasien.show', compact('pasien','periksa','title','subtitle'));
     }
 
     /**
@@ -67,7 +74,9 @@ class PasienController extends Controller
      */
     public function edit(Pasien $pasien)
     {
-        return view('pasien.edit', compact('pasien'));
+        $title = 'Pasien';
+        $subtitle = 'Ubah Data';
+        return view('pasien.edit', compact('pasien','title','subtitle'));
     }
 
     /**

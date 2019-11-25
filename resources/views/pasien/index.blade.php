@@ -1,7 +1,11 @@
 @extends('layouts.master')
 
 @section('title')
-Pasien
+    {{ $title }} - {{ config('app.name') }}
+@endsection
+
+@section('breadcrumb')
+    <li class="active">{{ $title }}</li>
 @endsection
 
 @section('content')
