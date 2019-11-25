@@ -39,10 +39,7 @@ Pasien
                         <td>{{$data->nik}}</td>
                         <td>{{$data->alamat}}</td>
                         <td>
-                            @if(auth()->user()->peran->peran=='Dokter')
-                                <a class="btn btn-primary" href="{{route('periksa.create', $data)}}" role="button">periksa</a>
-                            @endif
-                                <a class="btn btn-primary" href="{{route('pasien.show', $data)}}" role="button">detail</a>
+                            <a class="btn btn-primary" href="{{route('pasien.show', $data)}}" role="button">detail</a>
                         </td>
                     </tr>
                 @endforeach

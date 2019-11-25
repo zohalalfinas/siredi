@@ -1,4 +1,4 @@
-@extends('layouts.master')
+{{-- @extends('layouts.master')
 
 @section('title')
     tambah data periksa - {{ config('app.name') }}
@@ -6,7 +6,7 @@
 
 
 @section('content')<form>
-  
+
   <div class="content mt-3">
       <div class="form-group">
           <label for="nama">nama</label>
@@ -15,7 +15,7 @@
         </div>
       <div class="form-group">
           <label for="keterangan">keterangan</label>
-          <input type="text" class="form-control" id="keterangan" aria-describedby="emailHelp" placeholder="keterangan">
+          <input type="text" class="form-control @error('keterangan') is-invalid @enderror" id="keterangan" aria-describedby="emailHelp" placeholder="keterangan">
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
@@ -30,8 +30,8 @@
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>
-        <button type="submit" class="btn btn-primary w-25">save</button>
+       <a href=""><button type="submit" class="btn btn-primary w-25">save</button></a> 
       </form>
   </div>
     
-@endsection
+@endsection --}}

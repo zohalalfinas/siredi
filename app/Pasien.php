@@ -15,7 +15,7 @@ class Pasien extends Model
 	];
 	public function periksa()
 	{
-		return $this->hasMany('App\Periksa', 'periksa_id');
+		return $this->hasMany('App\Periksa');
 	}
 	
 }
