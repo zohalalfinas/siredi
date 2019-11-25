@@ -21,7 +21,7 @@
         <div class="form-group">
             <label>Alamat</label>
             <input name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukkan alamat" value="{{ old('alamat') }}">
-            @error('alamat') <div class="inval id-feedback">{{ $message }}</div> @enderror
+            @error('alamat') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <a class="btn btn-outline-dark d-inline-block" href="{{ route('pasien.index') }}">Kembali</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
