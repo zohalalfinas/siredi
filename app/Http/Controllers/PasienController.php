@@ -15,7 +15,7 @@ class PasienController extends Controller
      */
     public function index()
     {
-        $pasien = Pasien::all();
+        $pasien = Pasien::paginate(10);
         return view('pasien.index', compact('pasien'));
     }
 
@@ -104,5 +104,20 @@ class PasienController extends Controller
         Pasien::destroy($pasien->id);
         Alert::success('Pasien berhasil dihapus','Berhasil');
         return redirect('/pasien');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Pasien  $pasien
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $pasien = Pasien::orWhere('nama', 'like', '%' . $request->cari . '%')
+                            ->orWhere('nik', 'like', '%' . $request->cari . '%')
+                            ->orWhere('alamat', 'like', '%' . $request->cari . '%')
+                            ->paginate(10);
+        return view('pasien.index', compact('pasien'));
     }
 }

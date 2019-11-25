@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
 {   
+    Route::get('/pasien/cari-pasien', 'PasienController@search')->name('pasien.search');
 
     Route::group(['peran'=> 'Super Admin'],function(){
         Route::resource('/pengguna', 'PenggunaController');

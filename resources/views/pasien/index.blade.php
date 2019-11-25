@@ -5,29 +5,31 @@ Pasien
 @endsection
 
 @section('content')
-<div class=" content mt-3 input-group input-group-sm mb-3">
+<div class="container mt-3 ">
+    <form action="{{ route('pasien.search') }}" method="get">
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">cari nama pasien</span>
+            </div>
+            <input name="cari" type="text" class="form-control">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="submit">Cari</button>
+            </div>
+        </div>
+    </form>
 
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-sm">cari nama pasien</span>
-    </div>
-    
-    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-    <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1">Cari</button>
-    </div>
-    <div class="content mt-3">
-        
-        @if (auth()->user()->peran->peran == 'Administrator')
-            <a class="btn btn-primary btn-lg w-100 " href="{{route('pasien.create')}}" role="button">tambah</a>
-        @endif
-        <table class="table">
+    @if (auth()->user()->peran->peran == 'Administrator')
+        <a class="btn btn-primary btn-lg w-100 " href="{{route('pasien.create')}}" role="button">tambah</a>
+    @endif
+    <div class="table-responsive">
+        <table class="table table-hover">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">nama</th>
-                    <th scope="col">nik</th>
-                    <th scope="col">alamat</th>
-                    <th scope="col">opsi</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Nik</th>
+                    <th scope="col">Alamat</th>
+                    <th scope="col">Opsi</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,5 +47,7 @@ Pasien
                 @endforeach
             </tbody>
         </table>
+        {{ $pasien->links() }}
     </div>
+</div>
 @endsection
