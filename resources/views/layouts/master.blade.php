@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{asset('template/vendors/selectFX/css/cs-skin-elastic.css')}}">
     <link rel="stylesheet" href="{{asset('template/vendors/jqvmap/dist/jqvmap.min.css')}}">
 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    @yield('styles')
 
     <link rel="stylesheet" href="{{asset('template/assets/css/style.css')}}">
 
@@ -139,6 +141,10 @@
 <script src="{{asset('template/assets/js/main.js')}}"></script>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+@include('sweet::alert')
+
+
 <script src="{{asset('template/vendors/chart.js/dist/Chart.bundle.min.js')}}"></script>
 <script src="{{asset('template/assets/js/dashboard.js')}}"></script>
 <script src="{{asset('template/assets/js/widgets.js')}}"></script>
@@ -163,6 +169,8 @@
         });
     })(jQuery);
 </script>
+
+@stack('scripts')
 </body>
 
 </html>

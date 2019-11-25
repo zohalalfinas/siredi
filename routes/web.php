@@ -28,7 +28,6 @@ Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
     });
     Route::group(['peran'=> 'Administrator'],function(){
         Route::resource('/pasien', 'PasienController');
-        Route::get('/pasien/create/{pasien}', 'PasienController@create')->name('pasien.create');
     });
     Route::group(['peran'=> ['Administrator','Dokter']],function(){
         Route::get('/pasien', 'PasienController@index')->name('pasien.index');
