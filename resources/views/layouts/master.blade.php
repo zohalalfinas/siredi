@@ -53,6 +53,9 @@
                         <li class="">
                             <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Pasien</a>
                         </li>
+                        <li class="">
+                            <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Dokter</a>
+                        </li>
                     @elseif (auth()->user()->peran->peran == "Super Admin")
                         <li class="">
                             <a href="{{ route('pengguna.index')}}" > <i class="menu-icon fa fa-users"></i>Pengguna</a>

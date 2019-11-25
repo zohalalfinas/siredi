@@ -6,20 +6,32 @@
 
 
 @section('content')<form>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <div class="form-group form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-
+  
+  <div class="content mt-3">
+      <div class="form-group">
+          <label for="nama">nama</label>
+          <input type="text" class="form-control" id="nama" aria-describedby="emailHelp" placeholder="nama">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+      <div class="form-group">
+          <label for="keterangan">keterangan</label>
+          <input type="text" class="form-control" id="keterangan" aria-describedby="emailHelp" placeholder="keterangan">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="diagnosa">diagnosa</label>
+          <input type="text" class="form-control" id="diagnosa" placeholder="diagnosa">
+        </div>
+        <div class="form-group">
+          <label for="resep">resep</label>
+          <input type="text" class="form-control" id="resep" placeholder="resep">
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary w-25">save</button>
+      </form>
+  </div>
+    
 @endsection

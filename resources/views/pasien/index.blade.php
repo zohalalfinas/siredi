@@ -30,6 +30,10 @@ Pasien
             <tbody>
                     @foreach($pasien as $data) 
             <tr>
+              @if (auth()->user()->peran->peran=='Administrator')
+                <a class="btn btn-primary btn-lg w-100 " href="{{route('pasien.create', $data)}}" role="button">tambah</a>
+              @endif
+              
                 <th scope="row">1</th>
                 <td>{{$data->nama}}</td>
                 <td>{{$data->nik}}</td>
@@ -38,8 +42,12 @@ Pasien
                     @if(auth()->user()->peran->peran=='Dokter')
                       <a class="btn btn-primary" href="{{route('periksa.create', $data)}}" role="button">periksa</a>
                     @endif
+                      <a class="btn btn-primary" href="{{route('pasien.show', $data)}}" role="button">detail</a>
+                    @if (auth()->user()->peran->peran=='Administrator')
+                      <a class="btn btn-primary" href="" role="button">edit</a>
+                      <a class="btn btn-danger" href="" role="button">hapus</a>    
+                    @endif
                     
-                    <a class="btn btn-primary" href="{{route('pasien.show', $data)}}" role="button">detail</a>
 
                 </td>
             </tr>

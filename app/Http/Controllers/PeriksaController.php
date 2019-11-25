@@ -6,6 +6,7 @@ use App\Pasien;
 use Illuminate\Support\Facades\DB;
 use App\Periksa;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PeriksaController extends Controller
 {
@@ -89,7 +90,7 @@ class PeriksaController extends Controller
         $periksa->diagnosa = $request->diagnosa;
         $periksa->keterangan = $request->keterangan;
         $periksa->update();
-
+ 
         return redirect('/pemeriksaan');
     }
 
