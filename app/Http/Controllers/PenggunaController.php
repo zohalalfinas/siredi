@@ -14,8 +14,9 @@ class PenggunaController extends Controller
      */
     public function index()
     {
+        $title = 'Pengguna';
         $pengguna = User::all();
-        return view('pengguna.index', compact('pengguna'));
+        return view('pengguna.index', compact('pengguna','title'));
     }
 
     /**
