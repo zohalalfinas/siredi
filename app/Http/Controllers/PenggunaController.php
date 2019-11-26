@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Alert;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class PenggunaController extends Controller
     public function index()
     {
         $title = 'Pengguna';
-        $pengguna = User::all();
+        $pengguna = User::paginate(10);
         return view('pengguna.index', compact('pengguna','title'));
     }
 
@@ -26,7 +27,9 @@ class PenggunaController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Pengguna';
+        $subtitle = 'Tambah data';
+        return view('pengguna.create', compact('pengguna','title', 'subtitle'));
     }
 
     /**
@@ -37,7 +40,16 @@ class PenggunaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'      => ['required','string','max:60'],
+            'email'       => ['required','email'],
+            'nip'    => ['required','digits:16'],
+            'nomor_telepon'   => ['required','digits:12'],
+        ]);
+
+        $pengguna =  Pengguna::Create($request->all());
+        Alert::success('Pengguna berhasil ditambahkan','Berhasil');
+        return redirect()->route('pengguna.show',$pengguna);
     }
 
     /**
@@ -48,7 +60,9 @@ class PenggunaController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $title = 'Pengguna';
+        $subtitle = 'Detail Data';
+        return view('pengguna.show', compact('user', 'title', 'subtitle'));
     }
 
     /**

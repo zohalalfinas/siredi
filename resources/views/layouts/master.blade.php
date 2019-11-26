@@ -71,7 +71,7 @@
                         @else
                             <li>
                         @endif
-                            <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Dokter</a>
+                            
                         </li>
                     @elseif (auth()->user()->peran->peran == "Super Admin")
                         @if ($title == 'Pengguna')
