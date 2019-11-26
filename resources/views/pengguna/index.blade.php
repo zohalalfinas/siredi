@@ -38,7 +38,7 @@
                             <td>{{$data->nip}}</td>
                             <td>{{$data->nomor_telepon}}</td>
                             <td>    
-                                <a class="btn btn-primary" href="{{route('pengguna.show', $data)}}" role="button">detail</a>
+                                <a class="btn btn-primary" href="{{route('pengguna.show', $data)}}">detail</a>
                             </td>
                         </tr>
                     @endforeach

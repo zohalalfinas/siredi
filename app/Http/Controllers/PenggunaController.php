@@ -55,23 +55,23 @@ class PenggunaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\User  $pengguna
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $pengguna)
     {
         $title = 'Pengguna';
         $subtitle = 'Detail Data';
-        return view('pengguna.show', compact('user', 'title', 'subtitle'));
+        return view('pengguna.show', compact('pengguna', 'title', 'subtitle'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\User  $pengguna
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $pengguna)
     {
         //
     }
@@ -80,10 +80,10 @@ class PenggunaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  \App\User  $pengguna
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $pengguna)
     {
         //
     }
@@ -91,10 +91,10 @@ class PenggunaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param  \App\User  $pengguna
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $pengguna)
     {
         //
     }
