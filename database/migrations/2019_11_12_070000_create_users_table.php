@@ -21,12 +21,12 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('foto')->nullable();
-            $table->string('nip',16)->nullable();
+            $table->string('nip',18)->nullable()->unique();
             $table->text('alamat')->nullable();
             $table->string('nomor_telepon')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            
+
             $table->foreign('peran_id')->references('id')->on('peran')->onDelete('cascade')->onDelete('cascade');
         });
     }

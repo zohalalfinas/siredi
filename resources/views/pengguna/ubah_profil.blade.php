@@ -2,18 +2,16 @@
 
 
 @section('title')
-    {{ $title }} {{ $subtitle }} - {{ config('app.name') }}
+    {{ $title }} - {{ config('app.name') }}
 @endsection
 
 @section('breadcrumb')
-    <li><a href="{{ route('pengguna.index') }}">{{ $title }}</a></li>
-    <li><a href="{{ route('pengguna.show',$pengguna) }}">Detail {{ $title }}</a></li>
-    <li class="active">{{ $subtitle }}</li>
+    <li class="active">{{ $title }}</li>
 @endsection
 
 @section('content')
 <div class="content mt-3 mb-3">
-    <form action="{{ route('pengguna.update',$pengguna) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
         @csrf @method('patch')
         <div class="form-group">
             <label>Nama</label>
@@ -22,7 +20,7 @@
         </div>
         <div class="form-group">
             <label>Email</label>
-            <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" placeholder="Masukkan NIK" value="{{ old('email', $pengguna->email) }}">
+            <input disabled name="email" type="text" class="form-control @error('email') is-invalid @enderror" placeholder="Masukkan NIK" value="{{ old('email', $pengguna->email) }}">
             @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="form-group">
@@ -41,21 +39,10 @@
             @error('alamat') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="form-group">
-            <label>Peran</label>
-            <select name="peran" type="text" class="form-control @error('peran') is-invalid @enderror">
-                <option value="">Pilih Peran</option>
-                @foreach ($peran as $data)
-                    <option value="{{ $data->id }}" {{ old('peran',$pengguna->peran_id) == $data->id ? 'selected' : ''  }}>{{ $data->peran }}</option>   
-                @endforeach
-            </select>
-            @error('peran') <div class="invalid-feedback">{{ $message }}</div> @enderror
-        </div>
-        <div class="form-group">
             <label>Foto</label>
             <input name="foto" type="file" class="form-control @error('foto') is-invalid @enderror" placeholder="Masukkan Nomor Telepon" value="{{ old('foto') }}">
             @error('foto') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
-        <a class="btn btn-outline-dark d-inline-block" href="{{ route('pengguna.show',$pengguna) }}">Kembali</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>  
 </div>  

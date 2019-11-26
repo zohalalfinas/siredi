@@ -111,13 +111,14 @@
                 <div class="col-sm-5">
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <label class="col-form-label mr-2">{{ auth()->user()->nama }} </label>
                             <img class="user-avatar rounded-circle" src="{{asset('template/images/admin.jpg')}}" alt="User Avatar">
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
-                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
-                            <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
+                            <a class="nav-link" href="{{ route('profil') }}"><i class="fa fa-user"></i> Profil</a>
+                            <a class="nav-link" href="{{ route('profil.ubah') }}"><i class="fa fa-edit"></i> Ubah Profil</a>
+                            <a class="nav-link" href="{{ route('profil.password') }}"><i class="fa fa-key"></i> Ganti Password</a>
                             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Logout</a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

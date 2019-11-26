@@ -19,9 +19,17 @@ Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
 {   
     Route::get('/pasien/cari-pasien', 'PasienController@search')->name('pasien.search');
 
+    Route::get('/profil', 'PenggunaController@profil')->name('profil');
+    Route::get('/profil/ubah-profil', 'PenggunaController@ubahProfil')->name('profil.ubah');
+    Route::patch('/profil', 'PenggunaController@updateProfil')->name('profil.update');
+    Route::get('/profil/ganti-password', 'PenggunaController@showChangePassword')->name('profil.password');
+    Route::put('/profil/ganti-password', 'PenggunaController@changePassword')->name('profil.update_password');
+
     Route::group(['peran'=> 'Super Admin'],function(){
         Route::resource('/pengguna', 'PenggunaController');
+        Route::put('/pengguna/reset/{pengguna}/password', 'PenggunaController@resetPassword')->name('pengguna.reset');
     });
+
     Route::group(['peran'=> 'Dokter'],function(){
         Route::post('/periksa/ajax/get-data-periksa', 'PeriksaController@getDataPeriksa')->name('ajax.get.data.periksa');
         Route::get('/periksa/create/{pasien}', 'PeriksaController@create')->name('periksa.create');
@@ -29,9 +37,11 @@ Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
         Route::patch('/periksa/{periksa}', 'PeriksaController@update')->name('periksa.update');
         Route::delete('/periksa/{periksa}', 'PeriksaController@destroy')->name('periksa.destroy');
     });
+
     Route::group(['peran'=> 'Administrator'],function(){
         Route::resource('/pasien', 'PasienController');
     });
+
     Route::group(['peran'=> ['Administrator','Dokter']],function(){
         Route::get('/pasien', 'PasienController@index')->name('pasien.index');
         Route::get('/pasien/{pasien}', 'PasienController@show')->name('pasien.show');
