@@ -123,10 +123,11 @@ class PasienController extends Controller
      */
     public function search(Request $request)
     {
+        $title = 'Pasien';
         $pasien = Pasien::orWhere('nama', 'like', '%' . $request->cari . '%')
                             ->orWhere('nik', 'like', '%' . $request->cari . '%')
                             ->orWhere('alamat', 'like', '%' . $request->cari . '%')
                             ->paginate(10);
-        return view('pasien.index', compact('pasien'));
+        return view('pasien.index', compact('pasien','title'));
     }
 }
