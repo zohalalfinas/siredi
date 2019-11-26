@@ -81,8 +81,6 @@
                         @endif
                             <a href="{{ route('pengguna.index')}}" > <i class="menu-icon fa fa-users"></i>Pengguna</a>
                         </li>
-                        {{ route('pengguna.index')}}
-                        
                     @endif
                 </ul>
             </div><!-- /.navbar-collapse -->
