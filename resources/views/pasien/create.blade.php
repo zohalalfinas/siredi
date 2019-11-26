@@ -1,25 +1,36 @@
 @extends('layouts.master')
 
+
 @section('title')
-    tambah data pasien - {{ config('app.name') }}
+    {{ $title }} {{ $subtitle }} - {{ config('app.name') }}
+@endsection
+
+@section('breadcrumb')
+    <li><a href="{{ route('pasien.index') }}">{{ $title }}</a></li>
+    <li class="active">{{ $subtitle }}</li>
 @endsection
 
 @section('content')
 <div class="content mt-3">
-    <form>
+    <form action="{{ route('pasien.store') }}" method="POST">
+        @csrf
         <div class="form-group">
-          <label for="exampleInputEmail1">nama</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <label>Nama</label>
+            <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" placeholder="Masukkan Nama" value="{{ old('nama') }}">
+            @error('nama') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">nik</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label>NIK</label>
+            <input name="nik" type="text" class="form-control @error('nik') is-invalid @enderror" placeholder="Masukkan NIK" value="{{ old('nik') }}">
+            @error('nik') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">alamat</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label>Alamat</label>
+            <input name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukkan alamat" value="{{ old('alamat') }}">
+            @error('alamat') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <a class="btn btn-outline-dark d-inline-block" href="{{ route('pasien.index') }}">Kembali</a>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </form>  
 </div>  
 

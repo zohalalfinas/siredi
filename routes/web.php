@@ -17,21 +17,24 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
 {   
+    Route::get('/pasien/cari-pasien', 'PasienController@search')->name('pasien.search');
 
     Route::group(['peran'=> 'Super Admin'],function(){
         Route::resource('/pengguna', 'PenggunaController');
     });
     Route::group(['peran'=> 'Dokter'],function(){
+        Route::post('/periksa/ajax/get-data-periksa', 'PeriksaController@getDataPeriksa')->name('ajax.get.data.periksa');
         Route::get('/periksa/create/{pasien}', 'PeriksaController@create')->name('periksa.create');
-        Route::resource('/periksa', 'PeriksaController')->except(['create']);
-        Route::resource('/resep', 'ResepController');
+        Route::post('/periksa/{pasien}', 'PeriksaController@store')->name('periksa.store');
+        Route::patch('/periksa/{periksa}', 'PeriksaController@update')->name('periksa.update');
+        Route::delete('/periksa/{periksa}', 'PeriksaController@destroy')->name('periksa.destroy');
     });
     Route::group(['peran'=> 'Administrator'],function(){
         Route::resource('/pasien', 'PasienController');
-        Route::get('/pasien/create/{pasien}', 'PasienController@create')->name('pasien.create');
     });
     Route::group(['peran'=> ['Administrator','Dokter']],function(){
         Route::get('/pasien', 'PasienController@index')->name('pasien.index');
+        Route::get('/pasien/{pasien}', 'PasienController@show')->name('pasien.show');
     });
 
 });

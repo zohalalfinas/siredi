@@ -15,8 +15,9 @@
     <link rel="stylesheet" href="{{asset('template/vendors/themify-icons/css/themify-icons.css')}}">
     <link rel="stylesheet" href="{{asset('template/vendors/flag-icon-css/css/flag-icon.min.css')}}">
     <link rel="stylesheet" href="{{asset('template/vendors/selectFX/css/cs-skin-elastic.css')}}">
-    <link rel="stylesheet" href="{{asset('template/vendors/jqvmap/dist/jqvmap.min.css')}}">
 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    @yield('styles')
 
     <link rel="stylesheet" href="{{asset('template/assets/css/style.css')}}">
 
@@ -40,38 +41,45 @@
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    @if ($title == 'Dashboard')
+                        <li class="active">
+                    @else
+                        <li>
+                    @endif
                         <a href="{{ url('') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <h3 class="menu-title">Menu</h3><!-- /.menu-title -->
                     @if (auth()->user()->peran->peran == "Dokter")
                         
-                        <li class="">
+                        @if ($title == 'Pasien')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
                             <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Pasien</a>
                         </li>
                     @elseif (auth()->user()->peran->peran == "Administrator")
-                        <li class="">
+                        @if ($title == 'active')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
                             <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Pasien</a>
                         </li>
-                        <li class="">
-                            <a href="{{ route('pasien.index')}}" > <i class="menu-icon fa fa-user"></i>Dokter</a>
+                        @if ($title == 'Dokter')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
+                            
                         </li>
                     @elseif (auth()->user()->peran->peran == "Super Admin")
-                        <li class="menu-item-has-children dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  > <i class="menu-icon fa fa-users"> </i>Pengguna</a>
-                            <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Buttons</a></li>
-                                <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Badges</a></li>
-                                <li><i class="fa fa-bars"></i><a href="ui-tabs.html">Tabs</a></li>
-                                <li><i class="fa fa-share-square-o"></i><a href="ui-social-buttons.html">Social Buttons</a></li>
-                                <li><i class="fa fa-id-card-o"></i><a href="ui-cards.html">Cards</a></li>
-                                <li><i class="fa fa-exclamation-triangle"></i><a href="ui-alerts.html">Alerts</a></li>
-                                <li><i class="fa fa-spinner"></i><a href="ui-progressbar.html">Progress Bars</a></li>
-                                <li><i class="fa fa-fire"></i><a href="ui-modals.html">Modals</a></li>
-                                <li><i class="fa fa-book"></i><a href="ui-switches.html">Switches</a></li>
-                                <li><i class="fa fa-th"></i><a href="ui-grids.html">Grids</a></li>
-                                <li><i class="fa fa-file-word-o"></i><a href="ui-typgraphy.html">Typography</a></li>
-                            </ul>
+                        @if ($title == 'Pengguna')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
+                            <a href="{{ route('pengguna.index')}}" > <i class="menu-icon fa fa-users"></i>Pengguna</a>
                         </li>
                         {{ route('pengguna.index')}}
                         
@@ -128,7 +136,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>@yield('title')</h1>
+                        <h1>{{ $title }}</h1>
                     </div>
                 </div>
             </div>
@@ -136,7 +144,7 @@
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                            <li class="active">@yield('title')</li>
+                            @yield('breadcrumb')
                         </ol>
                     </div>
                 </div>
@@ -152,32 +160,13 @@
 <script src="{{asset('template/vendors/popper.js/dist/umd/popper.min.js')}}"></script>
 <script src="{{asset('template/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('template/assets/js/main.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 
 
-<script src="{{asset('template/vendors/chart.js/dist/Chart.bundle.min.js')}}"></script>
-<script src="{{asset('template/assets/js/dashboard.js')}}"></script>
-<script src="{{asset('template/assets/js/widgets.js')}}"></script>
-<script src="{{asset('template/vendors/jqvmap/dist/jquery.vmap.min.js')}}"></script>
-<script src="{{asset('template/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
-<script src="{{asset('template/vendors/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
-<script>
-    (function($) {
-        "use strict";
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+@include('sweet::alert')
 
-        jQuery('#vmap').vectorMap({
-            map: 'world_en',
-            backgroundColor: null,
-            color: '#ffffff',
-            hoverOpacity: 0.7,
-            selectedColor: '#1de9b6',
-            enableZoom: true,
-            showTooltip: true,
-            values: sample_data,
-            scaleColors: ['#1de9b6', '#03a9f5'],
-            normalizeFunction: 'polynomial'
-        });
-    })(jQuery);
-</script>
+@stack('scripts')
 </body>
 
 </html>

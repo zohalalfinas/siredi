@@ -17,11 +17,10 @@ class CreatePemeriksaanTable extends Migration
             $table->bigIncrements('id');
             $table->text('keterangan');
             $table->text('diagnosa');
-            $table->unsignedBigInteger('resep_id')->nullable();
+            $table->text('resep');
             $table->unsignedBigInteger('pasien_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('resep_id')->references('id')->on('resep')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('pasien_id')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
         });
     }

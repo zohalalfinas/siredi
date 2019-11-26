@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Pasien;
+use Alert;
+use App\Periksa;
 use Illuminate\Http\Request;
 
 class PasienController extends Controller
@@ -14,8 +16,9 @@ class PasienController extends Controller
      */
     public function index()
     {
-        $pasien = Pasien::all();
-        return view('pasien.index', compact('pasien'));
+        $title = 'Pasien';
+        $pasien = Pasien::paginate(10);
+        return view('pasien.index', compact('pasien','title'));
     }
 
     /**
@@ -25,7 +28,9 @@ class PasienController extends Controller
      */
     public function create()
     {
-        return view('pasien.create', compact('pasien'));
+        $title = 'Pasien';
+        $subtitle = 'Tambah Data';
+        return view('pasien.create',compact('title','subtitle'));
     }
 
     /**
@@ -36,7 +41,15 @@ class PasienController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'      => ['required','string','max:60'],
+            'nik'       => ['required','digits:16'],
+            'alamat'    => ['required','string'],
+        ]);
+
+        $pasien =  Pasien::Create($request->all());
+        Alert::success('Pasien berhasil ditambahkan','Berhasil');
+        return redirect()->route('pasien.show',$pasien);
     }
 
     /**
@@ -47,7 +60,10 @@ class PasienController extends Controller
      */
     public function show(Pasien $pasien)
     {
-        //
+        $title = 'Pasien';
+        $subtitle = 'Detail Data';
+        $periksa = Periksa::wherePasienId($pasien->id)->paginate(10);
+        return view('pasien.show', compact('pasien','periksa','title','subtitle'));
     }
 
     /**
@@ -58,7 +74,9 @@ class PasienController extends Controller
      */
     public function edit(Pasien $pasien)
     {
-        //
+        $title = 'Pasien';
+        $subtitle = 'Ubah Data';
+        return view('pasien.edit', compact('pasien','title','subtitle'));
     }
 
     /**
@@ -70,7 +88,18 @@ class PasienController extends Controller
      */
     public function update(Request $request, Pasien $pasien)
     {
-        //
+        $request->validate([
+            'nama'      => ['required','string','max:60'],
+            'nik'       => ['required','digits:16'],
+            'alamat'    => ['required','string'],
+        ]);
+
+        $pasien->nama   = $request->nama;
+        $pasien->nik    = $request->nik;
+        $pasien->alamat = $request->alamat;
+        $pasien->save();
+        Alert::success('Pasien berhasil diperbarui','Berhasil');
+        return back();
     }
 
     /**
@@ -81,6 +110,24 @@ class PasienController extends Controller
      */
     public function destroy(Pasien $pasien)
     {
-        //
+        Pasien::destroy($pasien->id);
+        Alert::success('Pasien berhasil dihapus','Berhasil');
+        return redirect('/pasien');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Pasien  $pasien
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $title = 'Pasien';
+        $pasien = Pasien::orWhere('nama', 'like', '%' . $request->cari . '%')
+                            ->orWhere('nik', 'like', '%' . $request->cari . '%')
+                            ->orWhere('alamat', 'like', '%' . $request->cari . '%')
+                            ->paginate(10);
+        return view('pasien.index', compact('pasien','title'));
     }
 }
