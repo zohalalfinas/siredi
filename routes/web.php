@@ -27,6 +27,7 @@ Route::group(['middleware' => ['web', 'auth', 'peran']],function ()
 
     Route::group(['peran'=> 'Super Admin'],function(){
         Route::resource('/pengguna', 'PenggunaController');
+        Route::get('/pengguna/cari-pengguna', 'PenggunaController@search')->name('pengguna.search');
         Route::put('/pengguna/reset/{pengguna}/password', 'PenggunaController@resetPassword')->name('pengguna.reset');
     });
 

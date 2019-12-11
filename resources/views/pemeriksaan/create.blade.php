@@ -8,7 +8,7 @@
 @section('content')<form>
 
   <div class="content mt-3">
-      <div class="form-group">
+      <div class="form-group" enctype="multipart/form-data">
           <label for="nama">nama</label>
           <input type="text" class="form-control" id="nama" aria-describedby="emailHelp" placeholder="nama">
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>

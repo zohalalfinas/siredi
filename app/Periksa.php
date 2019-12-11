@@ -12,7 +12,8 @@ class Periksa extends Model
 		'diagnosa',
 		'keterangan',
 		'resep',
-		'pasien_id'
+		'pasien_id',
+		'bukti_periksa'
 	];
 
 	public function pasien()

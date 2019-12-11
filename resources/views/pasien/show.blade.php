@@ -11,6 +11,9 @@
 
 @section('content')
 <div class="content mt-3">
+<div class="text-center mb-3">
+        <img src="{{ asset('img/foto_profil/'.$pasien->foto) }}" alt="{{ $pasien->foto }}" class="mw100">
+    </div>
     <div class="table-responsive">
         <table class="table table-sm">
             <tbody>
@@ -50,7 +53,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="formDataPeriksa" action="{{ route('periksa.store',$pasien) }}" method="POST">
+                    <form id="formDataPeriksa" action="{{ route('periksa.store',$pasien) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
@@ -67,6 +70,11 @@
                                 <label>Resep</label>
                                 <textarea name="resep" id="resep" type="text" class="form-control @error('resep') is-invalid @enderror" placeholder="Masukkan resep">{{ old('resep') }}</textarea>
                                 @error('resep') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Bukti periksa</label>
+                                <input name="bukti_periksa" type="file" class="form-control @error('bukti_periksa') is-invalid @enderror" placeholder="Masukkan bukti_periksa" value="{{ old('bukti_periksa') }}">
+                                @error('bukti_periksa') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                             <div class="modal-footer">
                                 <button class="btn btn-outline-dark d-inline-block" data-dismiss="modal">Tutup</button>
@@ -92,6 +100,7 @@
                             <th scope="col">Diagnosa</th>
                             <th scope="col">Resep</th>
                             <th scope="col">Waktu Periksa</th>
+                            <th scope="col">Bukti periksa</th>
                             <th scope="col">opsi</th>
                         </tr>
                     </thead>
@@ -106,6 +115,7 @@
                                 <td>{{$data->diagnosa}}</td>
                                 <td>{{$data->resep}}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->created_at)->diffForHumans() }}</td>
+                                <td>{{ ($data->bukti_periksa)}}</td>
                                 <td>
                                     @if (auth()->user()->peran->peran == "Dokter")
                                         <a class="btn btn-primary" onclick="ubahPeriksa({{$data->id}})" href="#modalPeriksa" data-toggle="modal">ubah</a>

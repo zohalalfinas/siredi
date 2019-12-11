@@ -30,7 +30,8 @@ class PasienController extends Controller
     {
         $title = 'Pasien';
         $subtitle = 'Tambah Data';
-        return view('pasien.create',compact('title','subtitle'));
+        $pasien = Pasien::all();
+        return view('pasien.create',compact('title','subtitle', 'pasien'));
     }
 
     /**
@@ -41,13 +42,18 @@ class PasienController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data =  $request->validate([
             'nama'      => ['required','string','max:60'],
-            'nik'       => ['required','digits:16'],
+            'nik'       => ['required','digits:16','unique:pasien'],
             'alamat'    => ['required','string'],
+            'foto' => ['image','mimes:jpeg,png','max:2048'],
         ]);
-
-        $pasien =  Pasien::Create($request->all());
+        if ($request->foto_pasien) {
+            $data['foto']   = $this->setImageUpload($request->foto,'img/foto_profil');
+        } else {
+            $data['foto'] = 'default.jpg';
+        }
+        $pasien = Pasien::Create($data);
         Alert::success('Pasien berhasil ditambahkan','Berhasil');
         return redirect()->route('pasien.show',$pasien);
     }
@@ -88,18 +94,24 @@ class PasienController extends Controller
      */
     public function update(Request $request, Pasien $pasien)
     {
-        $request->validate([
+        
+       $data =  $request->validate([
             'nama'      => ['required','string','max:60'],
             'nik'       => ['required','digits:16'],
             'alamat'    => ['required','string'],
+            'foto' => ['image','mimes:jpeg,png','max:2048'],
         ]);
-
-        $pasien->nama   = $request->nama;
-        $pasien->nik    = $request->nik;
-        $pasien->alamat = $request->alamat;
-        $pasien->save();
+        
+        
+        if ($request->foto_pasien) {
+            $data['foto']   = $this->setImageUpload($request->foto,'img/foto_profil', $pasien->foto);
+        } else {
+            $data['foto'] = 'default.jpg';
+        }
+        $pasien->update($data);
         Alert::success('Pasien berhasil diperbarui','Berhasil');
-        return back();
+        return redirect()->route('pasien.show', $pasien);
+        
     }
 
     /**
@@ -110,9 +122,12 @@ class PasienController extends Controller
      */
     public function destroy(Pasien $pasien)
     {
+        if($pasien->foto != 'default.jpg'){
+            File::delete(public_path('img/foto_profil/'.$pasien->foto));
+        }
         Pasien::destroy($pasien->id);
         Alert::success('Pasien berhasil dihapus','Berhasil');
-        return redirect('/pasien');
+        return redirect()->route('pasien.show', $pasien);
     }
 
     /**
@@ -126,7 +141,7 @@ class PasienController extends Controller
         $title = 'Pasien';
         $pasien = Pasien::orWhere('nama', 'like', '%' . $request->cari . '%')
                             ->orWhere('nik', 'like', '%' . $request->cari . '%')
-                            ->orWhere('alamat', 'like', '%' . $request->cari . '%')
+                            ->orWhere('alamat', 'likse', '%' . $request->cari . '%')
                             ->paginate(10);
         return view('pasien.index', compact('pasien','title'));
     }

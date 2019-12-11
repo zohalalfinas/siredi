@@ -12,6 +12,7 @@ class Pasien extends Model
 		'nama', 
 		'nik',
 		'alamat',
+		'foto',
 	];
 	public function periksa()
 	{

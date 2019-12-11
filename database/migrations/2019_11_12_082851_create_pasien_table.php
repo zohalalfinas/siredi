@@ -18,6 +18,7 @@ class CreatePasienTable extends Migration
             $table->string('nama');
             $table->string('nik',16)->unique();
             $table->text('alamat');
+            $table->text('foto')->nullable();
             $table->timestamps();
         });
     }

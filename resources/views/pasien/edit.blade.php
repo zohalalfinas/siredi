@@ -13,7 +13,7 @@
 
 @section('content')
 <div class="content mt-3">
-    <form action="{{ route('pasien.update',$pasien) }}" method="POST">
+    <form action="{{ route('pasien.update',$pasien) }}" method="POST"  enctype="multipart/form-data">
         @csrf @method('patch')
         <div class="form-group">
             <label>Nama</label>
@@ -29,6 +29,11 @@
             <label>Alamat</label>
             <input name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukkan Password" value="{{ old('alamat',$pasien->alamat) }}">
             @error('alamat') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+        <div class="form-group">
+            <label>Foto</label>
+            <input name="foto" type="file" class="form-control @error('foto') is-invalid @enderror" placeholder="Masukkan Nomor Telepon" value="{{ old('foto', $pasien->foto) }}">
+            @error('foto') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <a class="btn btn-outline-dark d-inline-block" href="{{ route('pasien.show',$pasien) }}">Kembali</a>
         <button type="submit" class="btn btn-primary">Simpan</button>

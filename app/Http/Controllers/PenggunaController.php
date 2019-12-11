@@ -235,4 +235,12 @@ class PenggunaController extends Controller
         Alert::success('Password berhasil direset','Berhasil');
         return redirect()->route('pengguna.show', $pengguna);
     }
+    public function search(Request $request)
+    {
+        $title = 'Pengguna';
+        $pengguna = User::orWhere('nama', 'like', '%' . $request->cari . '%')
+                            ->orWhere('email', 'like', '%' . $request->cari . '%')
+                            ->paginate(10);
+        return view('pengguna.index', compact('pengguna','title'));
+    }
 }

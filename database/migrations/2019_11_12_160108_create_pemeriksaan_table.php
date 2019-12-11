@@ -18,6 +18,7 @@ class CreatePemeriksaanTable extends Migration
             $table->text('keterangan');
             $table->text('diagnosa');
             $table->text('resep');
+            $table->text('bukti_periksa');
             $table->unsignedBigInteger('pasien_id')->nullable();
             $table->timestamps();
 

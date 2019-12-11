@@ -51,7 +51,7 @@
         </div>
         <div class="form-group">
             <label>Foto</label>
-            <input name="foto" type="file" class="form-control @error('foto') is-invalid @enderror" placeholder="Masukkan Nomor Telepon" value="{{ old('foto') }}">
+            <input name="foto" type="file" class="form-control @error('foto') is-invalid @enderror" placeholder="Masukkan foto" value="{{ old('foto') }}">
             @error('foto') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <a class="btn btn-outline-dark d-inline-block" href="{{ route('pengguna.index') }}">Kembali</a>

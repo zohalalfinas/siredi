@@ -14,22 +14,31 @@ class PeriksaController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-    //  */
+     */
     public function store(Request $request, Pasien $pasien)
     {
         $request->validate([
             'keterangan'    => ['required','string'],
             'diagnosa'      => ['required','string'],
             'resep'         => ['required','string'],
+            'bukti_periksa' => ['image', 'mimes:jpeg,png', 'max:2048']
         ]);
 
         Periksa::create([
             'keterangan'    => $request->keterangan,
             'diagnosa'      => $request->diagnosa,
             'resep'         => $request->resep,
+            'bukti_periksa' => $request->bukti_periksa,
             'pasien_id'     => $pasien->id,
         ]);
 
+        $periksa['pasien_id'] = $request->bukti_periksa;
+        if ($request->bukti_periksa) {
+            $periksa['bukti_periksa']   = $this->setImageUpload($request->bukti_periksa,'img/bukti');
+        } else {
+            $periksa['bukti_periksa'] = 'default.jpg';
+        }
+        
         Alert::success('Data periksa berhasil ditambahkan','Berhasil');
         return back();
     }
@@ -43,12 +52,13 @@ class PeriksaController extends Controller
      */
     public function update(Request $request, Periksa $periksa)
     {
-        $request->validate([
+        $periksa = $request->validate([
             'keterangan'    => ['required','string'],
             'diagnosa'      => ['required','string'],
             'resep'         => ['required','string'],
-        ]);
+            'bukti_periksa' => ['image','mimes:jpeg,png', 'max:2048'],
 
+        ]);
         $periksa->diagnosa      = $request->diagnosa;
         $periksa->keterangan    = $request->keterangan;
         $periksa->resep         = $request->keterangan;

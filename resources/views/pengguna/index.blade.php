@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="container mt-3 ">
-        <form action="" method="get">
+        <form action="{{ route ('pengguna.search') }}" method="get">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">cari nama pengguna</span>
