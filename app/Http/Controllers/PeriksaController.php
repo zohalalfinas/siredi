@@ -17,28 +17,21 @@ class PeriksaController extends Controller
      */
     public function store(Request $request, Pasien $pasien)
     {
-        $request->validate([
+        $periksa = $request->validate([
             'keterangan'    => ['required','string'],
             'diagnosa'      => ['required','string'],
             'resep'         => ['required','string'],
             'bukti_periksa' => ['image', 'mimes:jpeg,png', 'max:2048']
         ]);
 
-        Periksa::create([
-            'keterangan'    => $request->keterangan,
-            'diagnosa'      => $request->diagnosa,
-            'resep'         => $request->resep,
-            'bukti_periksa' => $request->bukti_periksa,
-            'pasien_id'     => $pasien->id,
-        ]);
-
-        $periksa['pasien_id'] = $request->bukti_periksa;
+        $periksa['pasien_id'] = $pasien->id;
         if ($request->bukti_periksa) {
             $periksa['bukti_periksa']   = $this->setImageUpload($request->bukti_periksa,'img/bukti');
         } else {
             $periksa['bukti_periksa'] = 'default.jpg';
         }
-        
+
+        Periksa::create($periksa);
         Alert::success('Data periksa berhasil ditambahkan','Berhasil');
         return back();
     }
@@ -52,17 +45,17 @@ class PeriksaController extends Controller
      */
     public function update(Request $request, Periksa $periksa)
     {
-        $periksa = $request->validate([
+        $data = $request->validate([
             'keterangan'    => ['required','string'],
             'diagnosa'      => ['required','string'],
             'resep'         => ['required','string'],
             'bukti_periksa' => ['image','mimes:jpeg,png', 'max:2048'],
-
         ]);
-        $periksa->diagnosa      = $request->diagnosa;
-        $periksa->keterangan    = $request->keterangan;
-        $periksa->resep         = $request->keterangan;
-        $periksa->save();
+
+        if ($request->bukti_periksa) {
+            $data['bukti_periksa']   = $this->setImageUpload($request->bukti_periksa,'img/bukti', $periksa->bukti_periksa);
+        }
+        $periksa->update($data);
 
         Alert::success('Data periksa berhasil diperbarui','Berhasil');
         return back();
@@ -80,6 +73,21 @@ class PeriksaController extends Controller
 
         Alert::success('Data periksa berhasil dihapus','Berhasil');
         return back();
+    }
+    public function setImageUpload($file, $path, $old_file = null)
+    {
+        $file_name = time() . "_" . $file->getClientOriginalName();
+        if ($file->move(public_path($path), $file_name)) {
+            if ($old_file) {
+                if ($old_file != 'default.jpg') {
+                    File::delete(public_path($path . '/' . $old_file));
+                }
+            }
+            return $file_name;
+        } else {
+            Alert::error('Foto gagal diunggah', 'gagal')->persistent('tutup');
+            return back();
+        }
     }
 
     /**
