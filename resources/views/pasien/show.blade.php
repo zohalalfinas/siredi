@@ -115,7 +115,11 @@
                                 <td>{{$data->diagnosa}}</td>
                                 <td>{{$data->resep}}</td>
                                 <td>{{ \Carbon\Carbon::parse($data->created_at)->diffForHumans() }}</td>
-                                <td>{{ ($data->bukti_periksa)}}</td>
+                                <td>
+                                    <div class="text-center mb-3">
+                                        <img src="{{ asset('img/bukti/'.$data->bukti_periksa) }}" alt="{{ $data->bukti_periksa }}" class="mw50" style="width:100px;" >
+                                    </div>
+                                </td>
                                 <td>
                                     @if (auth()->user()->peran->peran == "Dokter")
                                         <a class="btn btn-primary" onclick="ubahPeriksa({{$data->id}})" href="#modalPeriksa" data-toggle="modal">ubah</a>
